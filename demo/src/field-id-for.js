@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var js_expr_tree_1 = require("js-expr-tree");
 /**
  * Construct path from member expression
@@ -7,13 +7,11 @@ var js_expr_tree_1 = require("js-expr-tree");
  * @param ignoredProperties
  * @param path
  */
-function getPropertyPath(node, ignoredProperties, path) {
-    if (ignoredProperties === void 0) { ignoredProperties = []; }
-    if (path === void 0) { path = ""; }
+function getPropertyPath(node, ignoredProperties = [], path = "") {
     if (!node) {
         return "";
     }
-    var prefix = getPropertyPath(node.expression, ignoredProperties, path);
+    let prefix = getPropertyPath(node.expression, ignoredProperties, path);
     return (prefix ? (prefix + "_") : "") + (node.name ? node.name.escapedText : "");
 }
 /**
@@ -21,7 +19,7 @@ function getPropertyPath(node, ignoredProperties, path) {
  * @param memberExpression
  */
 function fieldIdFor(memberExpression) {
-    var expr = memberExpression.expression;
+    const expr = memberExpression.expression;
     if (expr.kind != js_expr_tree_1.ExpressionKind.ArrowFunction) {
         throw new Error("Expression must be arrow function");
     }
@@ -31,7 +29,8 @@ function fieldIdFor(memberExpression) {
     if (expr.body.kind != js_expr_tree_1.ExpressionKind.PropertyAccessExpression) {
         throw new Error("Invalid member expression.");
     }
-    var params = expr.parameters.map(function (p) { return p.name.escapedText; });
+    const params = expr.parameters.map(p => p.name.escapedText);
     return getPropertyPath(expr.body, params);
 }
 exports.fieldIdFor = fieldIdFor;
+//# sourceMappingURL=field-id-for.js.map
