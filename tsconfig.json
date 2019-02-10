@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules",
+    "demo",
+    ".idea"
+  ]
+}
