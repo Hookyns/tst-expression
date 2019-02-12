@@ -1,12 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var js_expr_tree_1 = require("js-expr-tree");
-/**
- * Construct path from member expression
- * @param node
- * @param ignoredProperties
- * @param path
- */
 function getPropertyPath(node, ignoredProperties = [], path = "") {
     if (!node) {
         return "";
@@ -14,10 +8,6 @@ function getPropertyPath(node, ignoredProperties = [], path = "") {
     let prefix = getPropertyPath(node.expression, ignoredProperties, path);
     return (prefix ? (prefix + "_") : "") + (node.name ? node.name.escapedText : "");
 }
-/**
- * Generate html id for model's property member expression
- * @param memberExpression
- */
 function fieldIdFor(memberExpression) {
     const expr = memberExpression.expression;
     if (expr.kind != js_expr_tree_1.ExpressionKind.ArrowFunction) {
@@ -33,4 +23,3 @@ function fieldIdFor(memberExpression) {
     return getPropertyPath(expr.body, params);
 }
 exports.fieldIdFor = fieldIdFor;
-//# sourceMappingURL=field-id-for.js.map
