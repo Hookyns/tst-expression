@@ -1,8 +1,9 @@
 # Typescript Expression Transformer
 [![NPM version](https://img.shields.io/npm/v/typescript-expression-transformer.svg?colorB=green)](https://www.npmjs.com/package/typescript-expression-transformer) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Gitter chat](https://badges.gitter.im/JumboJS/Lobby.svg)](https://gitter.im/typescript-expression-transformer/community)
 
-Expression trees for TypeScript similar to C#. This is the TypeScript transformer plugin. Watch /demo for working example.
+Expression trees for TypeScript similar to C#. This is the TypeScript transformer plugin. Watch [/demo](https://github.com/Hookyns/expression-transformer/tree/master/demo) folder for working example.
 
 ## Expression Type
 ```typescript
@@ -26,7 +27,10 @@ type Expression<TType> = {
 This expression type is declared inside [package](https://www.npmjs.com/package/js-expr-tree) which you need for runtime. It declares the Expression, ExpressionKind enum (taken from TypeScript) and maybe more runtime features in the future.
 
 ## Example
-An example demonstrating usage of member expression (PropertyAccessExpression) used to generate HTML Ids for model's elements.
+An example demonstrating usage of member expression (`PropertyAccessExpression`) used to generate HTML Ids for model's elements.
+There is function fieldIdFor() which takes Expression argument. In TypeScript you set some arrow function as an argument (eg. m => m.foo).
+In compile time, the transformer looks up all `CallExpression` of method/function declaration with parameter of type Expression<>.
+Then it takes the argument, creates the expression tree and replace the original expression with object (implementing interface Expression<>).
 
 ### Get Started
 Create project folder and run `npm i typescript-expression-transformer --save-dev`
