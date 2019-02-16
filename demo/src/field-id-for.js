@@ -23,3 +23,4 @@ function fieldIdFor(memberExpression) {
     return getPropertyPath(expr.body, params);
 }
 exports.fieldIdFor = fieldIdFor;
+//# sourceMappingURL=field-id-for.js.map

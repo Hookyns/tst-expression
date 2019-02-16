@@ -44,3 +44,4 @@ function printThisExpression(expr) {
                         "flags": 514 }, "node": { "flags": 0, "kind": 237, "name": { "flags": 0, "escapedText": "someGlobalVar", "flowNode": { "flags": 514 } },
                         "initializer": { "flags": 0, "kind": 8, "numericLiteralFlags": 0 }, "symbol": { "flags": 2, "escapedName": "someGlobalVar", "declarations": [null], "exports": {} } } }, "node": { "flags": 0, "kind": 237, "name": { "flags": 0, "escapedText": "localVar" }, "initializer": { "flags": 0, "kind": 87 }, "symbol": { "flags": 2, "escapedName": "localVar", "declarations": [null], "exports": {} } } }, "symbol": { "flags": 16, "escapedName": "__function", "declarations": [null] }, "locals": {} } }));
 })({ a: "foo" });
+//# sourceMappingURL=index.js.map

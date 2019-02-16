@@ -2,7 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "esnext",
-    "removeComments": true
+    "removeComments": true,
+    "sourceMap": true
   },
   "include": [
     "**/*.ts",
