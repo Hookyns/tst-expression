@@ -6,7 +6,7 @@
     "sourceMap": true
   },
   "include": [
-    "**/*.ts",
-    "../src/declarations.d.ts"
+    "../node_modules/js-expr-tree/*.d.ts",
+    "**/*.ts"
   ]
 }

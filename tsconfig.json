@@ -4,9 +4,9 @@
     "target": "esnext",
     "sourceMap": true
   },
-  "exclude": [
-    "node_modules",
-    "demo",
-    ".idea"
+  "include": [
+    "./src/**/*.ts",
+    "./node_modules/js-expr-tree/*.d.ts",
+    "./expression-transformer.ts"
   ]
 }

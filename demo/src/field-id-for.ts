@@ -19,8 +19,8 @@ function getPropertyPath(node, ignoredProperties: Array<string> = [], path: stri
  * Generate html id for model's property member expression
  * @param memberExpression
  */
-export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => any> | ((m: TModel) => any)) {
-	const expr = (memberExpression as any).expression as any;
+export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => any>) {
+	const expr = memberExpression.expression as ArrowFunctionExpressionNode;
 
 	if (expr.kind != ExpressionKind.ArrowFunction) {
 		throw new Error("Expression must be arrow function");

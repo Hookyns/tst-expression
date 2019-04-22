@@ -7,7 +7,8 @@
   "files": [
     "expression-transofrmer.js",
     "/src/**/*.js",
-    "/src/declarations.d.ts"
+    "/src/declarations.d.ts",
+    "/bin"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -29,8 +30,8 @@
     "@types/node": "^10.12.24"
   },
   "dependencies": {
-    "typescript": "^3.2.4",
     "glob": "^7.1.3",
-    "js-expr-tree": "^1.0.2"
+    "js-expr-tree": "^1.0.6",
+    "typescript": "^3.2.4"
   }
 }

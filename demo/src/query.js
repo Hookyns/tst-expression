@@ -38,12 +38,12 @@ WhereExpression.operatorMap = {
     [js_expr_tree_1.ExpressionKind.AmpersandAmpersandToken]: "and",
     [js_expr_tree_1.ExpressionKind.EqualsEqualsEqualsToken]: "=",
     [js_expr_tree_1.ExpressionKind.EqualsEqualsToken]: "=",
-    [js_expr_tree_1.ExpressionKind.GreaterThanEqualsToken]: ">=",
-    [js_expr_tree_1.ExpressionKind.GreaterThanToken]: ">",
-    [js_expr_tree_1.ExpressionKind.LessThanEqualsToken]: "<=",
-    [js_expr_tree_1.ExpressionKind.LessThanToken]: "<",
     [js_expr_tree_1.ExpressionKind.ExclamationEqualsEqualsToken]: "!=",
-    [js_expr_tree_1.ExpressionKind.ExclamationEqualsToken]: "!="
+    [js_expr_tree_1.ExpressionKind.ExclamationEqualsToken]: "!=",
+    [js_expr_tree_1.ExpressionKind.GreaterThanEqualsToken]: ">=",
+    [js_expr_tree_1.ExpressionKind.LessThanEqualsToken]: "<=",
+    [js_expr_tree_1.ExpressionKind.GreaterThanToken]: ">",
+    [js_expr_tree_1.ExpressionKind.LessThanToken]: "<"
 };
 class Query {
     constructor(entityName) {
@@ -51,8 +51,7 @@ class Query {
         this.entityName = entityName;
     }
     filter(filterExpression) {
-        let expr = filterExpression;
-        this.where.addExpression(expr.expression);
+        this.where.addExpression(filterExpression.expression);
         return this;
     }
     getSql() {
@@ -69,8 +68,8 @@ let sql;
 sql = new Query("Human")
     .filter({ compiled: x => x.firstName.startsWith(filter.nameStarts) && x.lastName != "Zuckerberg" || x.age > filter.age, context: { WhereExpression, Query, Human, filter, sql }, expression: { "flags": 128, "kind": 197, "parameters": [{ "flags": 0, "kind": 151, "name": { "flags": 0,
                     "escapedText": "x", "flowNode": { "flags": 1538 } }, "symbol": { "flags": 1, "escapedName": "x", "declarations": [null], "exports": {} } }], "equalsGreaterThanToken": { "flags": 0, "kind": 37 }, "body": { "flags": 0, "kind": 204, "left": { "flags": 0, "kind": 204, "left": { "flags": 0,
-                    "kind": 191, "expression": { "flags": 0, "kind": 189, "expression": { "flags": 0, "kind": 189, "expression": { "flags": 0, "escapedText": "x" }, "name": { "flags": 0, "escapedText": "firstName" } }, "name": {
-                            "flags": 0, "escapedText": "startsWith" } }, "arguments": [{ "flags": 0, "kind": 189, "expression": { "flags": 0, "escapedText": "filter" }, "name": { "flags": 0, "escapedText": "nameStarts"
+                    "kind": 191, "expression": { "flags": 0, "kind": 189, "expression": { "flags": 0, "kind": 189, "expression": { "flags": 0,
+                                "escapedText": "x" }, "name": { "flags": 0, "escapedText": "firstName" } }, "name": { "flags": 0, "escapedText": "startsWith" } }, "arguments": [{ "flags": 0, "kind": 189, "expression": { "flags": 0, "escapedText": "filter" }, "name": { "flags": 0, "escapedText": "nameStarts"
                             } }] }, "operatorToken": { "flags": 0, "kind": 54 },
                 "right": { "flags": 0, "kind": 204, "left": { "flags": 0, "kind": 189, "expression": { "flags": 0, "escapedText": "x", "flowNode": { "flags": 1568 } }, "name": { "flags": 0, "escapedText": "lastName" } }, "operatorToken": { "flags": 0, "kind": 34 }, "right": { "flags": 0, "kind": 10 } } },
             "operatorToken": { "flags": 0, "kind": 55 }, "right": { "flags": 0, "kind": 204, "left": { "flags": 0, "kind": 189, "expression": { "flags": 0, "escapedText": "x", "flowNode": { "flags": 516, "antecedents": [{ "flags": 576 }, { "flags": 576 }] } }, "name": { "flags": 0, "escapedText": "age" } }, "operatorToken": { "flags": 0, "kind": 30 },

@@ -9,12 +9,12 @@ class WhereExpression {
 		[ExpressionKind.AmpersandAmpersandToken]: "and",
 		[ExpressionKind.EqualsEqualsEqualsToken]: "=",
 		[ExpressionKind.EqualsEqualsToken]: "=",
-		[ExpressionKind.GreaterThanEqualsToken]: ">=",
-		[ExpressionKind.GreaterThanToken]: ">",
-		[ExpressionKind.LessThanEqualsToken]: "<=",
-		[ExpressionKind.LessThanToken]: "<",
 		[ExpressionKind.ExclamationEqualsEqualsToken]: "!=",
 		[ExpressionKind.ExclamationEqualsToken]: "!=",
+		[ExpressionKind.GreaterThanEqualsToken]: ">=",
+		[ExpressionKind.LessThanEqualsToken]: "<=",
+		[ExpressionKind.GreaterThanToken]: ">",
+		[ExpressionKind.LessThanToken]: "<",
 	};
 	
 	private conditions = [];
@@ -95,10 +95,9 @@ class Query<TEntity>
 	 * Add filter criteria to query
 	 * @param filterExpression
 	 */
-	public filter(filterExpression: Expression<(entity: TEntity) => boolean> | ((entity: TEntity) => boolean)): Query<TEntity>
+	public filter(filterExpression: Expression<(entity: TEntity) => boolean>): Query<TEntity>
 	{
-		let expr = filterExpression as Expression<(entity: TEntity) => boolean>;
-		this.where.addExpression(expr.expression);
+		this.where.addExpression(filterExpression.expression);
 		return this;
 	}
 

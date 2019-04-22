@@ -7,22 +7,23 @@ Expression trees for TypeScript similar to C#. This is the TypeScript transforme
 
 ## Expression Type
 ```typescript
-type Expression<TType> = {
-	/**
-	 * Compiled, executable, expression
-	 */
-	compiled: TType;
+type Expression<TType> = TType &
+	{
+		/**
+		 * Compiled, executable, expression
+		 */
+		compiled?: TType;
 
-	/**
-	 * TypeScript expression tree from compilation
-	 */
-	expression;
+		/**
+		 * TypeScript expression tree
+		 */
+		expression?: ExpressionNode;
 
-	/**
-	 * Variables from calling context, you can access their values
-	 */
-	context: { [key: string]: any };
-};
+		/**
+		 * Context variables
+		 */
+		context?: { [key: string]: any };
+	};
 ```
 This expression type is declared inside [package](https://www.npmjs.com/package/js-expr-tree) which you need for runtime. It declares the Expression, ExpressionKind enum (taken from TypeScript) and maybe more runtime features in the future.
 
@@ -59,8 +60,8 @@ function getPropertyPath(node, ignoredProperties: Array<string> = [], path: stri
  * Generate html id for model's property member expression
  * @param memberExpression
  */
-export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => any> | ((m: TModel) => any)) {
-	const expr = (memberExpression as any).expression as any;
+export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => any>) {
+	const expr = memberExpression.expression as ArrowFunctionExpressionNode;
 
 	if (expr.kind != ExpressionKind.ArrowFunction) {
 		throw new Error("Expression must be arrow function");
@@ -81,7 +82,7 @@ export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => a
 This module exports the fieldIdFor function which returns the HTML id constructed by member expression tree.
 
 ### Result Usage
-Create random index file with usage of fieldIdFor function.
+Create random ts file with usage of fieldIdFor function.
 > index.ts
 ```typescript
 import {fieldIdFor} from "./src/field-id-for"
