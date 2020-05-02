@@ -26,14 +26,11 @@ export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => a
 		throw new Error("Expression must be arrow function");
 	}
 
-	if (expr.body.kind == ExpressionKind.Block) {
-		throw new Error("Member expression must not have block body");
-	}
-
 	if (expr.body.kind != ExpressionKind.PropertyAccessExpression) {
-		throw new Error("Invalid member expression.");
+		throw new Error("Arrow function body must be member expression without block body.");
 	}
 
 	const params = expr.parameters.map(p => p.name.escapedText);
+	
 	return getPropertyPath(expr.body, params);
 }

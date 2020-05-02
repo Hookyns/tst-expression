@@ -1,6 +1,6 @@
-import * as ts from "typescript";
-import {getContext} from "./context";
-import {serializeNodeTree} from "./serialization";
+import * as ts                 from "typescript";
+import {getContext}            from "./context";
+import {serializeNodeTree}     from "./serialization";
 
 const ExpressionTypeName = "Expression";
 
@@ -18,7 +18,7 @@ export function isExpressionType(type)
  * @param context
  * @param program
  */
-export function getVisitor(context, program: ts.Program): ts.Visitor
+export function getVisitor(context: ts.TransformationContext, program: ts.Program): ts.Visitor
 {
 	let checker = program.getTypeChecker();
 
@@ -46,7 +46,7 @@ export function getVisitor(context, program: ts.Program): ts.Visitor
 							
 							return ts.createObjectLiteral([
 								ts.createPropertyAssignment("compiled", ts.visitEachChild(node, visit, context) as any),
-								ts.createPropertyAssignment("context", getContext(checker, node)),
+								ts.createPropertyAssignment("context", getContext(checker, node, context)),
 								ts.createPropertyAssignment("expression", (treeExpression.statements[0] as any).declarationList.declarations[0].initializer)
 							]);
 						}

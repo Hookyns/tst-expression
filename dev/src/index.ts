@@ -1,5 +1,8 @@
 import {fieldIdFor} from "./field-id-for";
 
+// Some module scope variable not used by expressions
+const unusedGlobVar = 5;
+
 // Some module scope variable
 const someGlobalVar = 10;
 
@@ -19,10 +22,15 @@ function printThisExpression(expr: Expression<(m) => boolean> | any/* any or | (
 	console.log("Calling context:", expr.context);
 }
 
+function mapExpression(expr: Expression<{ test: string, a: number, localVar: boolean }>) {
+	console.log(expr.compiled);
+}
+
 ((filter) => {
 	let localVar = false;
 
 	printThisExpression(m => m.foo >= someGlobalVar || !!localVar && Foo.Bar === "BAZ" && m.a == filter.a);
+	mapExpression({ test: "", a: 5, localVar });
 	
 	console.log("------------------------------");
 	

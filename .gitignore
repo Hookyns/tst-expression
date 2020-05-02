@@ -3,8 +3,10 @@ expression-transformer.js
 expression-transformer.js.map
 src/**/*.js
 src/**/*.js.map
-demo/**/*.js
-demo/**/*.js.map
+src/**/*.d.ts
+dev/**/*.js
+dev/**/*.js.map
+dev/**/*.d.ts
 
 # Logs
 logs

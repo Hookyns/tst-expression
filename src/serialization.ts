@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 // List of properties which will be ignored in expr tree serialization
-const IgnoredProperties = ["text", "pos", "end", "parent", "id", "transformFlags", "modifierFlagsCache", "isReferenced"];
+const IgnoredProperties = ["text", "pos", "end", "parent", "id", "transformFlags", "modifierFlagsCache", "isReferenced", "nextContainer", "flowNode"];
 
 /**
  * Serialize node's tree

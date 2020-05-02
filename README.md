@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Gitter chat](https://badges.gitter.im/JumboJS/Lobby.svg)](https://gitter.im/typescript-expression-transformer/community)
 
-Expression trees for TypeScript similar to C#. This is the TypeScript transformer plugin. Watch [/demo](https://github.com/Hookyns/expression-transformer/tree/master/demo) folder for working example.
+Expression trees for TypeScript similar to C#. This is the TypeScript transformer plugin. 
 
 ## Expression Type
 ```typescript
@@ -30,11 +30,11 @@ This expression type is declared inside [package](https://www.npmjs.com/package/
 ## Example
 An example demonstrating usage of member expression (`PropertyAccessExpression`) used to generate HTML Ids for model's elements.
 There is function fieldIdFor() which takes Expression argument. In TypeScript you set some arrow function as an argument (eg. m => m.foo).
-In compile time, the transformer looks up all `CallExpression` of method/function declaration with parameter of type Expression<>.
-Then it takes the argument, creates the expression tree and replace the original expression with object (implementing interface Expression<>).
+In transpile time, the transformer looks up all `CallExpression` of method/function declaration with parameter of type Expression<>.
+Then it takes the argument, creates the expression tree and replace the original expression with object (representing type Expression<>).
 
 ### Get Started
-Create project folder and run `npm i typescript-expression-transformer --save-dev`
+Create project folder and run `npm i typescript-expression-transformer ttypescript -D & npm i js-expr-tree`
 
 ### Source
 > src/field-id-for.ts
@@ -67,15 +67,12 @@ export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => a
 		throw new Error("Expression must be arrow function");
 	}
 
-	if (expr.body.kind == ExpressionKind.Block) {
-		throw new Error("Member expression must not have block body");
-	}
-
 	if (expr.body.kind != ExpressionKind.PropertyAccessExpression) {
-		throw new Error("Invalid member expression.");
+		throw new Error("Arrow function body must be member expression without block body.");
 	}
 
 	const params = expr.parameters.map(p => p.name.escapedText);
+	
 	return getPropertyPath(expr.body, params);
 }
 ```
@@ -102,7 +99,11 @@ Create typescript config file.
   "compilerOptions": {
     "module": "commonjs",
     "target": "esnext",
-    "removeComments": true
+    "plugins": [
+      {
+        "transform": "typescript-expression-transformer"
+      }
+    ]
   },
   "exclude": [
     "node_modules"
@@ -110,13 +111,7 @@ Create typescript config file.
 }
 ```
 
-Create compile script. Tranformer needs ts.Program argument so you must compile it from code. Watch the compiler's implementation.
-> compile.js
-```javascript
-require("typescript-expression-transformer/src/compiler").compile();
-```
-
-Run `node compile.js` and index.js will be created.
+Using `ttypescript` package, you can transpile source by running `ttsc`. index.js will be created.
 
 #### Transpiled Code
 > index.js

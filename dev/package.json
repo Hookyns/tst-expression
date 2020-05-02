@@ -1,0 +1,11 @@
+{
+  "name": "typescript-expression-transformer-dev",
+  "version": "1.0.0",
+  "description": "TypeScript expression transformer DEVs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "ttypescript": "^1.5.10"
+  }
+}

@@ -3,7 +3,12 @@
     "module": "commonjs",
     "target": "esnext",
     "removeComments": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "plugins": [
+      {
+        "transform": "../expression-transformer.js"
+      }
+    ]
   },
   "include": [
     "../node_modules/js-expr-tree/*.d.ts",
