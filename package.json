@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "tsc"
+    "prepare": "tsc"
   },
   "keywords": [
     "TypeScript",
@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "js-expr-tree": "^1.0.7",
-    "typescript": "^3.2.4"
+    "typescript": "^3.8.0"
   }
 }
