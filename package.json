@@ -1,6 +1,6 @@
 {
   "name": "typescript-expression-transformer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "TypeScript expression transformer",
   "main": "expression-transformer.js",
   "types": "src/declarations.d.ts",
