@@ -39,7 +39,17 @@ export function getVisitor(context: ts.TransformationContext, program: ts.Progra
 
 				if (!!declaration)
 				{
-					const param = declaration.parameters[index] as any;
+					let param: any = declaration.parameters[index] as any;
+					
+					if (!param && declaration.parameters.length <= index) {
+						let lastParam = declaration.parameters[declaration.parameters.length - 1];
+						
+						if (!lastParam.dotDotDotToken) {
+							throw new Error("Invalid number of arguments.");
+						}
+						
+						param = lastParam;
+					}
 
 					if (isExpressionType(param.type) || (param.type && param.type.types && param.type.types.some(t => isExpressionType(t))))
 					{

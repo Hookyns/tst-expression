@@ -11,9 +11,11 @@ const IgnoredProperties = ["text", "pos", "end", "parent", "id", "transformFlags
 export function serializeNodeTree(node: ts.Node, parent)
 {
 	const cache = [];
+	
 	return JSON.stringify(node, function (key, value) {
-		// Ignore these properties
-		if (IgnoredProperties.indexOf(key) !== -1) return undefined;
+		// Ignore these properties; but don't ignore "text" property if it's text containing node
+		if (IgnoredProperties.indexOf(key) !== -1 && (key != "text" || !ts.isStringTextContainingNode(this)))
+			return undefined;
 
 		if (typeof value === "object" && value !== null) {
 			if (cache.indexOf(value) !== -1) {
