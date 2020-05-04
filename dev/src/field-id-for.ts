@@ -15,11 +15,7 @@ function getPropertyPath(node, ignoredProperties: Array<string> = [], path: stri
 	return (prefix ? (prefix + "_") : "") + (node.name ? node.name.escapedText : "");
 }
 
-/**
- * Generate html id for model's property member expression
- * @param memberExpression
- */
-export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => any>) {
+function fieldId<TModel>(memberExpression: Expression<(m: TModel) => any>) {
 	const expr = memberExpression.expression as ArrowFunctionExpressionNode;
 
 	if (expr.kind != ExpressionKind.ArrowFunction) {
@@ -31,6 +27,14 @@ export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => a
 	}
 
 	const params = expr.parameters.map(p => p.name.escapedText);
-	
+
 	return getPropertyPath(expr.body, params);
+}
+
+/**
+ * Generate html id for model's property member expression
+ * @param memberExpression2
+ */
+export function fieldIdFor<TModel>(memberExpression2: Expression<(m: TModel) => any>) {
+	return fieldId(memberExpression2);
 }
