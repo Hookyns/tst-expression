@@ -34,7 +34,7 @@ In transpile time, the transformer looks up all `CallExpression` of method/funct
 Then it takes the argument, creates the expression tree and replace the original expression with object (representing type Expression<>).
 
 ### Get Started
-Create project folder and run `npm i typescript-expression-transformer ttypescript -D & npm i js-expr-tree`
+Create project folder and run `npm i typescript-expression-transformer ttypescript -D && npm i js-expr-tree`
 
 ### Source
 > src/field-id-for.ts
