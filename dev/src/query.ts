@@ -133,7 +133,7 @@ const filter = {
 
 let sql;
 sql = new Query<Human>("Human")
-	.filter(x => x.firstName.startsWith(filter.nameStarts) && x.lastName != "Zuckerberg" || x.age > filter.age)
+	.filter(x => x.firstName.startsWith(filter.nameStarts) && x.lastName != "Zuckerberg" || x.age > filter.age && !!ExpressionKind.NullKeyword)
 	.getSql();
 
 console.log(sql);

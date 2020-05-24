@@ -9,7 +9,7 @@ import * as ts from "typescript";
 export function getContext(checker: ts.TypeChecker, node: ts.Node, context: ts.TransformationContext): ts.ObjectLiteralExpression
 {
 	let ignoredVariables = [];
-	let includeVariables = [];
+	let includeVariables = {};
 
 	if (ts.isFunctionExpression(node) || ts.isArrowFunction(node))
 	{
@@ -21,7 +21,7 @@ export function getContext(checker: ts.TypeChecker, node: ts.Node, context: ts.T
 	{
 		const parent = node.parent;
 
-		if (ts.isIdentifier(node) 
+		if (ts.isIdentifier(node)
 			// it's last expression in PropertyAccess tree
 			&& (!ts.isPropertyAccessExpression(parent) || parent.expression == node)
 			// it's property assignment value, not property name
@@ -29,7 +29,7 @@ export function getContext(checker: ts.TypeChecker, node: ts.Node, context: ts.T
 			// ignore function parameters
 			&& ignoredVariables.indexOf(node.escapedText) == -1)
 		{
-			includeVariables.push(node.escapedText);
+			includeVariables[node.escapedText as string] = node;
 		}
 
 		return ts.visitEachChild(node, visit, context);
@@ -39,9 +39,9 @@ export function getContext(checker: ts.TypeChecker, node: ts.Node, context: ts.T
 
 	const contextVariablesProperties = [];
 
-	for (let variable of includeVariables)
+	for (let variable of Object.keys(includeVariables))
 	{
-		contextVariablesProperties.push(ts.createShorthandPropertyAssignment(variable));
+		contextVariablesProperties.push(ts.createShorthandPropertyAssignment(includeVariables[variable]));
 	}
 
 	return ts.createObjectLiteral(contextVariablesProperties);
