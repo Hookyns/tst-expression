@@ -10,22 +10,22 @@ export abstract class ExpressionOnly<TType> {
     /**
      * Compiled executable expression.
      */
-    compiled?: TType;
+    compiled: TType;
 
     /**
      * Expression tree.
      */
-    expression?: ExpressionNode;
+    expression: ExpressionNode;
 
     /**
      * Captured context variables used in expression.
      */
-    context?: { [capturedVariableName: string]: any };
+    context: { [capturedVariableName: string]: any };
 
     /**
      * @private
      */
-    private [EXPRESSION_ID_PROPERTY_NAME]: true
+    private [EXPRESSION_ID_PROPERTY_NAME]?: true
 }
 
 export type Expression<TType> = TType | ExpressionOnly<TType>;

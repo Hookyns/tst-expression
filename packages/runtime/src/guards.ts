@@ -15,10 +15,10 @@ import {
  */
 export function assertExpression(expression: unknown): asserts expression is ExpressionOnly<any>
 {
-    if (typeof expression == "object"
-        && expression.hasOwnProperty("compiled")
-        && expression.hasOwnProperty("expression")
-        && expression.hasOwnProperty("context")
+    if (typeof expression != "object"
+        || !expression.hasOwnProperty("compiled")
+        || !expression.hasOwnProperty("expression")
+        || !expression.hasOwnProperty("context")
     )
     {
         throw new Error("Argument is not an expression.");
@@ -30,9 +30,9 @@ export function assertExpression(expression: unknown): asserts expression is Exp
  * Type guard validation that expression is IdentifierExpressionNode
  * @param node
  */
-export function isIdentifierExpression(node: ExpressionNode): node is nodes.IdentifierExpressionNode
+export function isIdentifier(node: ExpressionNode): node is nodes.IdentifierExpressionNode
 {
-    return node.kind == ExpressionKind.Identifier;
+    return node?.kind === ExpressionKind.Identifier;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -40,9 +40,9 @@ export function isIdentifierExpression(node: ExpressionNode): node is nodes.Iden
  * Type guard validation that expression is IdentifierExpressionNode
  * @param node
  */
-export function assertIdentifierExpression(node: ExpressionNode): asserts node is nodes.IdentifierExpressionNode
+export function assertIdentifier(node: ExpressionNode): asserts node is nodes.IdentifierExpressionNode
 {
-    if (!isIdentifierExpression(node)) throw new ExpressionAssertError(ExpressionKind.Identifier, node);
+    if (!isIdentifier(node)) throw new ExpressionAssertError(ExpressionKind.Identifier, node);
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -52,7 +52,7 @@ export function assertIdentifierExpression(node: ExpressionNode): asserts node i
  */
 export function isArrowFunctionExpression(node: ExpressionNode): node is nodes.ArrowFunctionExpressionNode
 {
-    return node.kind == ExpressionKind.ArrowFunction;
+    return node?.kind === ExpressionKind.ArrowFunction;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -73,7 +73,7 @@ export function assertArrowFunctionExpression(node: ExpressionNode): asserts nod
  */
 export function isParameterExpression(node: ExpressionNode): node is nodes.ParameterExpressionNode
 {
-    return node.kind == ExpressionKind.Parameter;
+    return node?.kind === ExpressionKind.Parameter;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -93,7 +93,7 @@ export function assertParameterExpression(node: ExpressionNode): asserts node is
  */
 export function isPropertyAccessExpression(node: ExpressionNode): node is nodes.PropertyAccessExpressionNode
 {
-    return node.kind == ExpressionKind.PropertyAccessExpression;
+    return node?.kind === ExpressionKind.PropertyAccessExpression;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -113,7 +113,7 @@ export function assertPropertyAccessExpression(node: ExpressionNode): asserts no
  */
 export function isElementAccessExpression(node: ExpressionNode): node is nodes.ElementAccessExpressionNode
 {
-    return node.kind == ExpressionKind.ElementAccessExpression;
+    return node?.kind === ExpressionKind.ElementAccessExpression;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -133,7 +133,7 @@ export function assertElementAccessExpression(node: ExpressionNode): asserts nod
  */
 export function isNonNullExpression(node: ExpressionNode): node is nodes.NonNullExpressionNode
 {
-    return node.kind == ExpressionKind.NonNullExpression;
+    return node?.kind === ExpressionKind.NonNullExpression;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -153,7 +153,7 @@ export function assertNonNullExpression(node: ExpressionNode): asserts node is n
  */
 export function isBinaryExpression(node: ExpressionNode): node is nodes.BinaryExpressionNode
 {
-    return node.kind == ExpressionKind.BinaryExpression;
+    return node?.kind === ExpressionKind.BinaryExpression;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -173,7 +173,7 @@ export function assertBinaryExpression(node: ExpressionNode): asserts node is no
  */
 export function isPrefixUnaryExpression(node: ExpressionNode): node is nodes.PrefixUnaryExpressionNode
 {
-    return node.kind == ExpressionKind.PrefixUnaryExpression;
+    return node?.kind === ExpressionKind.PrefixUnaryExpression;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -193,7 +193,7 @@ export function assertPrefixUnaryExpression(node: ExpressionNode): asserts node 
  */
 export function isCallExpression(node: ExpressionNode): node is nodes.CallExpressionNode
 {
-    return node.kind == ExpressionKind.CallExpression;
+    return node?.kind === ExpressionKind.CallExpression;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -213,7 +213,7 @@ export function assertCallExpression(node: ExpressionNode): asserts node is node
  */
 export function isStringLiteral(node: ExpressionNode): node is nodes.StringLiteralNode
 {
-    return node.kind == ExpressionKind.StringLiteral;
+    return node?.kind === ExpressionKind.StringLiteral;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -233,7 +233,7 @@ export function assertStringLiteral(node: ExpressionNode): asserts node is nodes
  */
 export function isNumericLiteral(node: ExpressionNode): node is nodes.NumericLiteralNode
 {
-    return node.kind == ExpressionKind.NumericLiteral;
+    return node?.kind === ExpressionKind.NumericLiteral;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -253,7 +253,7 @@ export function assertNumericLiteral(node: ExpressionNode): asserts node is node
  */
 export function isParenthesizedExpression(node: ExpressionNode): node is nodes.ParenthesizedExpressionNode
 {
-    return node.kind == ExpressionKind.ParenthesizedExpression;
+    return node?.kind === ExpressionKind.ParenthesizedExpression;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -273,7 +273,7 @@ export function assertParenthesizedExpression(node: ExpressionNode): asserts nod
  */
 export function isObjectLiteralExpression(node: ExpressionNode): node is nodes.ObjectLiteralExpressionNode
 {
-    return node.kind == ExpressionKind.ObjectLiteralExpression;
+    return node?.kind === ExpressionKind.ObjectLiteralExpression;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -293,7 +293,7 @@ export function assertObjectLiteralExpression(node: ExpressionNode): asserts nod
  */
 export function isPropertyAssignmentExpression(node: ExpressionNode): node is nodes.PropertyAssignmentExpressionNode
 {
-    return node.kind == ExpressionKind.PropertyAssignment;
+    return node?.kind === ExpressionKind.PropertyAssignment;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -313,7 +313,7 @@ export function assertPropertyAssignmentExpression(node: ExpressionNode): assert
  */
 export function isShorthandPropertyAssignmentExpression(node: ExpressionNode): node is nodes.ShorthandPropertyAssignmentExpressionNode
 {
-    return node.kind == ExpressionKind.ShorthandPropertyAssignment;
+    return node?.kind === ExpressionKind.ShorthandPropertyAssignment;
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -333,7 +333,7 @@ export function assertShorthandPropertyAssignmentExpression(node: ExpressionNode
  */
 export function isSpreadAssignmentExpression(node: ExpressionNode): node is nodes.SpreadAssignmentExpressionNode
 {
-    return node.kind == ExpressionKind.SpreadAssignment;
+    return node?.kind === ExpressionKind.SpreadAssignment;
 }
 
 // noinspection JSUnusedGlobalSymbols
