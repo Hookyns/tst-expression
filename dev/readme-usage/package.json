@@ -11,6 +11,6 @@
         "ttypescript": "^1.5.12"
     },
     "dependencies": {
-        "tst-expression": "^1.0.0-alpha.5"
+        "tst-expression": "^1.0.0-alpha.6"
     }
 }
