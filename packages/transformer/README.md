@@ -1,131 +1,209 @@
-# Typescript Expression<> Transformer (tst-expression-transformer)
-[![NPM version](https://img.shields.io/npm/v/tst-expression-transformer.svg?colorB=green)](https://www.npmjs.com/package/typescript-expression-transformer) 
+# JavaScript(/TypeScript) Expression<> (tst-expression)
+[![NPM version](https://img.shields.io/npm/v/tst-expression.svg?colorB=green)](https://www.npmjs.com/package/typescript-expression)
+[![NPM version](https://img.shields.io/npm/v/tst-expression-transformer.svg?colorB=green)](https://www.npmjs.com/package/typescript-expression-transformer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-Expression trees for TypeScript similar to C#. This is the TypeScript transformer plugin. 
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=hookyns&repo=tst-expression&theme=tokyonight)](https://github.com/Hookyns/tst-expression)
 
-## Expression Type
-```typescript
-type Expression<TType> = TType &
-	{
-		/**
-		 * Compiled, executable, expression
-		 */
-		compiled?: TType;
+> Expression trees for TypeScript similar to C#.
+>
+> Expression trees represent code in a tree-like data structure, where each node is an expression, for example, a method call or a binary operation such as x < y.
+>
+> You can compile and run code represented by expression trees. This enables dynamic operations over compiled code, with access to the context captured by the code.
 
-		/**
-		 * TypeScript expression tree
-		 */
-		expression?: ExpressionNode;
-
-		/**
-		 * Context variables
-		 */
-		context?: { [key: string]: any };
-	};
+## How to Start
+* Install transformer package and **ttypescript** `npm i tst-expression-transformer ttypescript -D`,
+* install runtime package `npm i tst-expression`,
+* update *tsconfig.json* file,
+```json5
+{
+    "compilerOptions": {
+        // add tst-expression-transformer plugin
+        "plugins": [
+            {
+                "transform": "tst-expression-transformer"
+            }
+        ]
+    }
+}
 ```
-This expression type is declared inside [package](https://www.npmjs.com/package/tst-expression) which you need for runtime. It declares the Expression, ExpressionKind enum (taken from TypeScript) and maybe more runtime features in the future.
+* if You use Webpack, updater webpack config,
+```javascript
+({
+    test: /\.(tsx?)$/,
+    loader: "ts-loader",
+    options: {
+        compiler: "ttypescript"
+    }
+})
+```
+* write Your code,
+* compile via `npx ttsc`,
+* run the code.
+
+## Expression<>
+```typescript
+type Expression<TType> = {
+    /**
+     * Compiled executable expression.
+     */
+    compiled: TType;
+
+    /**
+     * Expression tree.
+     */
+    expression: ExpressionNode;
+
+    /**
+     * Captured context variables used in expression.
+     */
+    context: { [capturedVariableName: string]: any };
+}
+```
+
+## Usage
+You can use `Expression<>` as type of method or function parameters.
+Transformer `tst-expression-transformer` handle all calls of those functions and methods
+and result is the `Expression` object with AST, compiled expression and captured context used by the expression.
+
+Thanks to runtime package `tst-expression`, You have typing support with set of type guards,
+so You can traverse the expression safely.
+
+Simple example, which returns array with name of variable and its value.
+```typescript
+import { assertIdentifier, assertExpression, Expression } from "tst-expression";
+
+const someVariable = 5;
+const entry = getEntry(someVariable);
+
+console.log(entry); // [ 'someVariable', 5 ]
+
+function getEntry(expression: Expression<number>): [name: string, value: number] {
+    assertExpression(expression);
+    assertIdentifier(expression.expression);
+
+    return [expression.expression.escapedText, expression.compiled];
+}
+```
 
 ## Example
-An example demonstrating usage of member expression (`PropertyAccessExpression`) used to generate HTML Ids for model's elements.
-There is function fieldIdFor() which takes Expression argument. In TypeScript you set some arrow function as an argument (eg. m => m.foo).
-In transpile time, the transformer looks up all `CallExpression` of method/function declaration with parameter of type Expression<>.
-Then it takes the argument, creates the expression tree and replace the original expression with object (representing type Expression<>).
+A little more complex example which takes expression of some math operations and logs the operation with its result.
 
-### Get Started
-Create project folder and run `npm i typescript-expression-transformer ttypescript -D && npm i js-expr-tree`
+Result of the example is: `someVariable(5) + 5 - PI(3.141592653589793) = 6.858407346410207`
 
-### Source
-> src/field-id-for.ts
 ```typescript
-import {ExpressionKind} from "tst-expression"; // the runtime package of this transformer; it's a dependency
+import { 
+    assertBinaryExpression, assertExpression, Expression, ExpressionKind, ExpressionNode, 
+    isBinaryExpression, isNumericLiteral, isIdentifier, isPropertyAccessExpression 
+} from "tst-expression";
 
-/**
- * Construct path from member expression
- * @param node
- * @param ignoredProperties
- * @param path
- */
-function getPropertyPath(node, ignoredProperties: Array<string> = [], path: string = "") {
-	if (!node) {
-		return "";
-	}
+const someVariable = 5;
+logMathOperation(someVariable + 5 - Math.PI);
 
-	let prefix = getPropertyPath(node.expression, ignoredProperties, path);
-	return (prefix ? (prefix + "_") : "") + (node.name ? node.name.escapedText : "");
+function logMathOperation(operationExpression: Expression<number>) {
+    assertExpression(operationExpression);
+    assertBinaryExpression(operationExpression.expression);
+
+    const parts = splitBinaryExpressions(operationExpression.expression);
+    let operation = "";
+
+    for (const part of parts) {
+        if (typeof (part) == "string") {
+            operation += part;
+        } else if (isNumericLiteral(part)) {
+            operation += part.text;
+        } else if (isIdentifier(part)) {
+            operation += part.escapedText + `(${operationExpression.context[part.escapedText]})`;
+        } else if (isPropertyAccessExpression(part)) {
+            if (isIdentifier(part.expression) && isIdentifier(part.name)) {
+                operation += part.name.escapedText + `(${operationExpression.context[part.expression.escapedText][part.name.escapedText]})`;
+            } else {
+                throw new Error("Not implemented.");
+            }
+        }
+    }
+    
+    console.log(operation, "=", operationExpression.compiled);
 }
 
-/**
- * Generate html id for model's property member expression
- * @param memberExpression
- */
-export function fieldIdFor<TModel>(memberExpression: Expression<(m: TModel) => any>) {
-	const expr = memberExpression.expression as ArrowFunctionExpressionNode;
+function splitBinaryExpressions(expression: any): Array<ExpressionNode | string> {
+    if (isBinaryExpression(expression)) {
+        return [
+            ...splitBinaryExpressions(expression.left),
+            " " + getOperator(expression.operatorToken) + " ",
+            ...splitBinaryExpressions(expression.right)
+        ];
+    }
 
-	if (expr.kind != ExpressionKind.ArrowFunction) {
-		throw new Error("Expression must be arrow function");
-	}
-
-	if (expr.body.kind != ExpressionKind.PropertyAccessExpression) {
-		throw new Error("Arrow function body must be member expression without block body.");
-	}
-
-	const params = expr.parameters.map(p => p.name.escapedText);
-	
-	return getPropertyPath(expr.body, params);
-}
-```
-This module exports the fieldIdFor function which returns the HTML id constructed by member expression tree.
-
-### Result Usage
-Create random ts file with usage of fieldIdFor function.
-> index.ts
-```typescript
-import {fieldIdFor} from "./src/field-id-for"
-
-class Human {
-	public name: string;
-	public baz: { deepProp: string };
+    return [expression];
 }
 
-console.log("Generated id for property:", fieldIdFor<Human>(m => m.baz.deepProp));
-```
-
-Create typescript config file.
-> tsconfig.json
-```json
-{
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "esnext",
-    "plugins": [
-      {
-        "transform": "tst-expression-transformer"
-      }
-    ]
-  }
+function getOperator(operatorToken: ExpressionNode): string {
+    return ({
+        [ExpressionKind.PlusToken]: "+",
+        [ExpressionKind.MinusToken]: "-",
+        [ExpressionKind.SlashToken]: "/",
+        [ExpressionKind.AsteriskToken]: "*"
+    } as { [kind: number]: string })[operatorToken.kind];
 }
 ```
 
-Using `ttypescript` package, you can transpile source by running `npx ttsc`. index.js will be created.
-
-#### Transpiled Code
-> index.js
+Transpiled code:
 ```javascript
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var field_id_for_1 = require("./field-id-for");
-class Human {
+const tst_expression_1 = require("tst-expression");
+const someVariable = 5;
+logMathOperation({ compiled: someVariable + 5 - Math.PI, context: { someVariable, Math }, expression: {
+        "flags": 0, "kind": 219, "left": { "flags": 0, "kind": 219, "left": { "flags": 0, "kind": 79, "escapedText": "someVariable" }, "operatorToken": { "flags": 0, "kind": 39 }, "right": { "flags": 0, "kind": 8, "text": "5", "numericLiteralFlags": 0 } }, "operatorToken": { "flags": 0, "kind": 40 }, "right": { "flags": 0, "kind": 204, "expression": { "flags": 0, "kind": 79, "escapedText": "Math" }, "name": { "flags": 0, "kind": 79, "escapedText": "PI" } } } });
+function logMathOperation(operationExpression) {
+    (0, tst_expression_1.assertExpression)(operationExpression);
+    (0, tst_expression_1.assertBinaryExpression)(operationExpression.expression);
+    const parts = splitBinaryExpressions(operationExpression.expression);
+    let operation = "";
+    for (const part of parts) {
+        if (typeof (part) == "string") {
+            operation += part;
+        }
+        else if ((0, tst_expression_1.isNumericLiteral)(part)) {
+            operation += part.text;
+        }
+        else if ((0, tst_expression_1.isIdentifier)(part)) {
+            operation += part.escapedText + `(${operationExpression.context[part.escapedText]})`;
+        }
+        else if ((0, tst_expression_1.isPropertyAccessExpression)(part)) {
+            if ((0, tst_expression_1.isIdentifier)(part.expression) && (0, tst_expression_1.isIdentifier)(part.name)) {
+                operation += part.name.escapedText + `(${operationExpression.context[part.expression.escapedText][part.name.escapedText]})`;
+            }
+            else {
+                throw new Error("Not implemented.");
+            }
+        }
+    }
+    console.log(operation, "=", operationExpression.compiled);
 }
-console.log("Generated id for property:", field_id_for_1.fieldIdFor({ compiled: m => m.baz.deepProp, context: { Human }, expression: { "flags": 128, "kind": 197, "parameters": [{ "flags": 0, "kind": 151, "name": { "flags": 0, "escapedText": "m", "flowNode": { "flags": 2 } }, "symbol": { "flags": 1, "escapedName": "m", "declarations": [null], "exports": {} } }], "equalsGreaterThanToken": { "flags": 0, "kind": 37 }, "body": { "flags": 0, "kind": 189, "expression": { "flags": 0, "kind": 189, "expression": { "flags": 0, "escapedText": "m" }, "name": { "flags": 0, "escapedText": "baz" } }, "name": { "flags": 0, "escapedText": "deepProp" } }, "flowNode": { "flags": 2 }, "symbol": { "flags": 16, "escapedName": "__function", "declarations": [null] }, "locals": {} } }));
-```
-
-Run `node index.js` and you'll see the result.
-
-#### Result
-```
-Generated id for property: baz_deepProp
+function splitBinaryExpressions(expression) {
+    if ((0, tst_expression_1.isBinaryExpression)(expression)) {
+        return [
+            ...splitBinaryExpressions(expression.left),
+            " " + getOperator(expression.operatorToken) + " ",
+            ...splitBinaryExpressions(expression.right)
+        ];
+    }
+    return [expression];
+}
+function getOperator(operatorToken) {
+    return {
+        [tst_expression_1.ExpressionKind.PlusToken]: "+",
+        [tst_expression_1.ExpressionKind.MinusToken]: "-",
+        [tst_expression_1.ExpressionKind.SlashToken]: "/",
+        [tst_expression_1.ExpressionKind.AsteriskToken]: "*"
+    }[operatorToken.kind];
+}
 ```
 
 ## Tip
 For work with AST you can use https://astexplorer.net which prints tree nicely. Use the TypeScript AST.
+
+## License
+This project is licensed under the [MIT license](./LICENSE).
