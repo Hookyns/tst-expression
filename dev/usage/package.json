@@ -6,7 +6,10 @@
     },
     "license": "MIT",
     "repository": "https://github.com/Hookyns/tst-expression",
-    "devDependencies": {},
+    "devDependencies": {
+        "typescript": "^4.4.4",
+        "ttypescript": "^1.5.12"
+    },
     "dependencies": {
         "tst-expression": "^1.0.0-alpha.0"
     }
