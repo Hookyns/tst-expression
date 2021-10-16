@@ -1,6 +1,6 @@
 {
     "name": "tst-expression",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Expression trees for TypeScript similar to C#.",
     "main": "dist/tst-expression.js",
     "types": "lib/index.d.ts",

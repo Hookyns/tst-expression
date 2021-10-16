@@ -1,6 +1,6 @@
 # JavaScript(/TypeScript) Expression<> (tst-expression)
-[![NPM version](https://img.shields.io/npm/v/tst-expression.svg?colorB=green)](https://www.npmjs.com/package/typescript-expression)
-[![NPM version](https://img.shields.io/npm/v/tst-expression-transformer.svg?colorB=green)](https://www.npmjs.com/package/typescript-expression-transformer)
+[![NPM version](https://img.shields.io/npm/v/tst-expression.svg?colorB=brightgreen&label=tst-expression)](https://www.npmjs.com/package/typescript-expression)
+[![NPM version](https://img.shields.io/npm/v/tst-expression-transformer.svg?colorB=brightgreen&label=tst-expression-transformer)](https://www.npmjs.com/package/typescript-expression-transformer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 [![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=hookyns&repo=tst-expression&theme=tokyonight)](https://github.com/Hookyns/tst-expression)

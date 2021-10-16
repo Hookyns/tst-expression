@@ -1,6 +1,6 @@
 {
     "name": "tst-expression-transformer",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Expression trees for TypeScript similar to C#.",
     "main": "index.js",
     "files": [
@@ -31,6 +31,6 @@
     "repository": "https://github.com/Hookyns/tst-expression",
     "dependencies": {
         "typescript": "^4.4.4",
-        "tst-expression": "1.0.0"
+        "tst-expression": "^1.0.0"
     }
 }
