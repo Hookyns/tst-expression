@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2019",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "plugins": [
+            {
+                "transform": "../../transformer/index.js"
+            }
+        ]
+    },
+    "include": [
+        "index.ts"
+    ]
+}

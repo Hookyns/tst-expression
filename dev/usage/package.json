@@ -1,0 +1,13 @@
+{
+    "private": true,
+    "author": {
+        "name": "Roman Jámbor",
+        "email": "hookcze@gmail.com"
+    },
+    "license": "MIT",
+    "repository": "https://github.com/Hookyns/tst-expression",
+    "devDependencies": {},
+    "dependencies": {
+        "tst-expression": "^1.0.0-alpha.0"
+    }
+}
