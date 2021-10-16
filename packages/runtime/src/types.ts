@@ -1,12 +1,12 @@
-/**
- * Expression Type
- */
 import { ExpressionNode } from "./nodes";
 
 export const EXPRESSION_ID_PROPERTY_NAME = "__tst_expression__";
 export const EXPRESSION_TYPE_NAME = "Expression";
 
-export type ExpressionOnly<TType> = {
+/**
+ * Expression Type
+ */
+export abstract class ExpressionOnly<TType> {
     /**
      * Compiled executable expression.
      */
@@ -21,6 +21,11 @@ export type ExpressionOnly<TType> = {
      * Captured context variables used in expression.
      */
     context?: { [capturedVariableName: string]: any };
-};
 
-export type Expression<TType> = TType | ExpressionOnly<TType> | { [EXPRESSION_ID_PROPERTY_NAME]: true };
+    /**
+     * @private
+     */
+    private [EXPRESSION_ID_PROPERTY_NAME]: true
+}
+
+export type Expression<TType> = TType | ExpressionOnly<TType>;
