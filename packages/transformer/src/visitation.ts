@@ -1,18 +1,34 @@
-import * as ts               from "typescript";
-import { getContext }        from "./context";
-import { serializeNodeTree } from "./serialization";
-
-const ExpressionTypeName = "Expression";
+import { EXPRESSION_ID_PROPERTY_NAME, EXPRESSION_TYPE_NAME } from "tst-expression";
+import * as ts                         from "typescript";
+import { getContext }                  from "./context";
+import { serializeNodeTree }           from "./serialization";
 
 /**
- * Check if type is Expression
+ * Check if type is Expression<>
+ * @param typeNode
+ * @param checker
+ */
+export function isExpressionTypeNode(typeNode: ts.TypeNode, checker: ts.TypeChecker)
+{
+    if (ts.isTypeReferenceNode(typeNode))
+    {
+        return isExpressionType(checker.getTypeFromTypeNode(typeNode));
+    }
+
+    return false;
+}
+
+/**
+ * Check if type is Expression<>
  * @param type
  */
-export function isExpressionType(type: any /*ts.TypeNode*/)
+export function isExpressionType(type: ts.Type)
 {
-    // if (ts.isTypeNode())
-    
-    return type && type.typeName && type.typeName.escapedText === ExpressionTypeName;
+    return (type.symbol?.name === EXPRESSION_TYPE_NAME || type.aliasSymbol?.name === EXPRESSION_TYPE_NAME)
+        && (type as ts.UnionType)
+            .types[1]
+            .getProperties()
+            .some(prop => prop.name == EXPRESSION_ID_PROPERTY_NAME);
 }
 
 /**
@@ -35,10 +51,16 @@ export function getVisitor(context: ts.TransformationContext, program: ts.Progra
             // -1 means that current node is not an argument.
             const argIndex = parent.arguments.indexOf(node as ts.Expression);
 
-            // Check it is an argument and ignore node, if it's just an identifier (it can be Expression<> but stored in variable, 
-            // so this CallExpression is just passing already processed Expression<>.)
-            if (argIndex != -1 && !ts.isIdentifier(node))
+            // Check it is an argument
+            if (argIndex != -1)
             {
+                // If it is an identifier, ignore it in case that it is identifier of some variable with type Expression<>
+                // (so this CallExpression is just passing already processed Expression<>.)
+                if (ts.isIdentifier(node) && isExpressionType(checker.getTypeAtLocation(node))) 
+                {
+                    return node;
+                }
+                
                 const signature: ts.Signature = checker.getResolvedSignature(parent);
                 const declaration = signature.declaration;
 
@@ -61,7 +83,10 @@ export function getVisitor(context: ts.TransformationContext, program: ts.Progra
                     }
 
                     // TODO: Remove casts to any
-                    if (param.type && (isExpressionType(param.type) || ((param.type as any).types && (param.type as any).types.some((t: ts.TypeNode) => isExpressionType(t)))))
+                    if (param.type && (
+                        isExpressionTypeNode(param.type, checker)
+                        || ((param.type as any).types && (param.type as any).types.some((t: ts.TypeNode) => isExpressionTypeNode(t, checker)))
+                    ))
                     {
                         let serializedTreeExpression = "var a = " + serializeNodeTree(node, parent);
                         let treeExpression = ts.createSourceFile("__.ts", serializedTreeExpression, ts.ScriptTarget.ESNext, null, ts.ScriptKind.JS);

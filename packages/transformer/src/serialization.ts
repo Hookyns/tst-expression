@@ -14,7 +14,7 @@ export function serializeNodeTree(node: ts.Node, parent: ts.CallExpression)
 	
 	return JSON.stringify(node, function (key, value) {
 		// Ignore these properties; but don't ignore "text" property if it's text containing node
-		if (IgnoredProperties.indexOf(key) !== -1 && (key != "text" || !ts.isStringTextContainingNode(this)))
+		if (IgnoredProperties.indexOf(key) !== -1 && (key != "text" || (!ts.isStringTextContainingNode(this) && !ts.isNumericLiteral(this))))
 			return undefined;
 
 		if (typeof value === "object" && value !== null) {

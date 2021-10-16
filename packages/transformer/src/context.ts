@@ -31,6 +31,13 @@ export function getContext(checker: ts.TypeChecker, node: ts.Node, context: ts.T
     {
         const parent = node.parent;
 
+        // Skip all declarations of parameters
+        if (ts.isParameter(node))
+        {
+            return node;
+        }
+
+        // It's and identifier
         if (ts.isIdentifier(node)
             // it's last expression in PropertyAccess tree
             && (!ts.isPropertyAccessExpression(parent) || parent.expression == node)
