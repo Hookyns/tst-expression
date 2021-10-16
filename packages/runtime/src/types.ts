@@ -4,6 +4,7 @@
 import { ExpressionNode } from "./nodes";
 
 export const EXPRESSION_ID_PROPERTY_NAME = "__tst_expression__";
+export const EXPRESSION_TYPE_NAME = "Expression";
 
 export type ExpressionOnly<TType> = {
     /**
