@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "declaration": true,
+        "module": "es6",
+        "target": "es6",
+        "outDir": "./lib/",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+    },
+    "include": [
+        "src/**/*.ts",
+        "index.ts"
+    ]
+}

@@ -1,0 +1,44 @@
+{
+    "name": "tst-expression",
+    "version": "1.0.0-alpha.0",
+    "description": "Dotnet like Expression<> for TypeScript.",
+    "main": "dist/tst-expression.js",
+    "types": "lib/index.d.ts",
+    "repository": "https://github.com/Hookyns/tst-expression",
+    "files": [
+        "dist/**/*.js",
+        "dist/**/*.js.map",
+        "lib/**/*.d.ts"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "npm run build:prod",
+        "build": "npm run build:prod",
+        "start": "webpack serve",
+        "build:prod": "SET \"NODE_ENV=production\" && webpack",
+        "build:prod:analyze": "SET \"NODE_ENV=production\" && webpack --env analyze=true",
+        "build:dev": "webpack"
+    },
+    "keywords": [
+        "AST",
+        "expression",
+        "dotnet",
+        "typescript",
+        "transformer",
+        "plugin",
+        "javascript",
+        "runtime",
+        "tree",
+        "lambda"
+    ],
+    "author": {
+        "name": "Roman Jámbor",
+        "email": "hookcze@gmail.com"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "ts-loader": "^9.2.6",
+        "webpack": "^5.58.2",
+        "webpack-cli": "^4.9.0"
+    }
+}
