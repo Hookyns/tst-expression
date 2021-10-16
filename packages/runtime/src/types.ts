@@ -19,29 +19,7 @@ export type ExpressionOnly<TType> = {
     /**
      * Captured context variables used in expression.
      */
-    context?: { [key: string]: any };
+    context?: { [capturedVariableName: string]: any };
 };
 
 export type Expression<TType> = TType | ExpressionOnly<TType>
-// {
-//     /**
-//      * Compiled executable expression.
-//      */
-//     compiled?: TType;
-//
-//     /**
-//      * Expression tree.
-//      */
-//     expression?: ExpressionNode;
-//
-//     /**
-//      * Captured context variables used in expression.
-//      */
-//     context?: { [key: string]: any };
-//
-//     /**
-//      * Property to identify Expression type
-//      * @private
-//      */
-//     [EXPRESSION_ID_PROPERTY_NAME]: true;
-// };
