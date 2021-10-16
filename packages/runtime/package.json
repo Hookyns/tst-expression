@@ -1,6 +1,6 @@
 {
     "name": "tst-expression",
-    "version": "1.0.0-alpha.3",
+    "version": "1.0.0-alpha.4",
     "description": "Dotnet like Expression<> for TypeScript.",
     "main": "dist/tst-expression.js",
     "types": "lib/index.d.ts",

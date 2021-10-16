@@ -23,4 +23,4 @@ export type ExpressionOnly<TType> = {
     context?: { [capturedVariableName: string]: any };
 };
 
-export type Expression<TType> = (TType | ExpressionOnly<TType>) & { [EXPRESSION_ID_PROPERTY_NAME]: true };
+export type Expression<TType> = TType | ExpressionOnly<TType> | { [EXPRESSION_ID_PROPERTY_NAME]: true };
