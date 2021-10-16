@@ -11,6 +11,8 @@ packages/runtime/lib
 packages/transformer/dist
 packages/transformer/lib
 
+*.tgz
+
 /tsconfig.tsbuildinfo
 
 # Logs
