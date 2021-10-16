@@ -15,7 +15,11 @@ import {
  */
 export function assertExpression(expression: unknown): asserts expression is ExpressionOnly<any>
 {
-    if ((expression as any)[EXPRESSION_ID_PROPERTY_NAME] !== true)
+    if (typeof expression == "object"
+        && expression.hasOwnProperty("compiled")
+        && expression.hasOwnProperty("expression")
+        && expression.hasOwnProperty("context")
+    )
     {
         throw new Error("Argument is not an expression.");
     }
@@ -139,7 +143,7 @@ export function isNonNullExpression(node: ExpressionNode): node is nodes.NonNull
  */
 export function assertNonNullExpression(node: ExpressionNode): asserts node is nodes.NonNullExpressionNode
 {
-    if(!isNonNullExpression(node)) throw new ExpressionAssertError(ExpressionKind.NonNullExpression, node);
+    if (!isNonNullExpression(node)) throw new ExpressionAssertError(ExpressionKind.NonNullExpression, node);
 }
 
 // noinspection JSUnusedGlobalSymbols
