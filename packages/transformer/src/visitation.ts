@@ -64,7 +64,7 @@ export function getVisitor(context: ts.TransformationContext, program: ts.Progra
                 const signature: ts.Signature = checker.getResolvedSignature(parent);
                 const declaration = signature.declaration;
 
-                if (ts.isFunctionDeclaration(declaration) || ts.isMethodDeclaration(declaration) || ts.isConstructorDeclaration(declaration))
+                if (ts.isFunctionLike(declaration) || ts.isMethodDeclaration(declaration) || ts.isConstructorDeclaration(declaration))
                 {
                     let param: ts.ParameterDeclaration = declaration.parameters[argIndex];
                     let ignoreThisNode = false;
