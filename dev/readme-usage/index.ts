@@ -11,10 +11,28 @@ import {
     assertIdentifier
 } from "tst-expression";
 
+const getEntryFunctionConst = function(expression: Expression<number>): [name: string, value: number] {
+    assertExpression(expression);
+    assertIdentifier(expression.expression);
+
+    return [expression.expression.escapedText, expression.compiled];
+}
+
+const getEntryArrowFunctionConst = (expression: Expression<number>): [name: string, value: number] => {
+    assertExpression(expression);
+    assertIdentifier(expression.expression);
+
+    return [expression.expression.escapedText, expression.compiled];
+}
+
 const someVariable = 5;
 const entry = getEntry(someVariable);
+const entryFromConst = getEntryFunctionConst(someVariable);
+const entryFromArrowConst = getEntryArrowFunctionConst(someVariable);
 
 console.log(entry);
+console.log(entryFromConst);
+console.log(entryFromArrowConst);
 
 function getEntry(expression: Expression<number>): [name: string, value: number] {
     assertExpression(expression);
