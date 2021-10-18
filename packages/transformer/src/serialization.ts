@@ -6,9 +6,8 @@ const IgnoredProperties = ["text", "pos", "end", "parent", "id", "transformFlags
 /**
  * Serialize node's tree
  * @param node
- * @param parent
  */
-export function serializeNodeTree(node: ts.Node, parent: ts.CallExpression)
+export function serializeNodeTree(node: ts.Node)
 {
 	const cache: any[] = [];
 	

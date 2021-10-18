@@ -41,3 +41,9 @@ logParameters(
         && y < importedProp && y < ImportedClass.staticProp
         && z.bar("bar").baz
 );
+
+class Foo
+{
+    private static expression: Expression<(x: any) => boolean> = x => !!x;
+    private static func = (x: any) => !!x;
+}
