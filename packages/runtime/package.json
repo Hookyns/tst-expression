@@ -1,23 +1,17 @@
 {
     "name": "tst-expression",
-    "version": "1.0.2",
+    "version": "2.1.3",
     "description": "Expression trees for TypeScript similar to C#.",
-    "main": "dist/tst-expression.js",
-    "types": "lib/index.d.ts",
+    "main": "dist/cjs/index.js",
+    "types": "dist/cjs/index.d.ts",
     "repository": "https://github.com/Hookyns/tst-expression",
     "files": [
         "dist/**/*.js",
-        "dist/**/*.js.map",
-        "lib/**/*.d.ts"
+        "dist/**/*.d.ts"
     ],
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "prepare": "npm run build:prod",
-        "build": "npm run build:prod",
-        "start": "webpack serve",
-        "build:prod": "SET \"NODE_ENV=production\" && webpack",
-        "build:prod:analyze": "SET \"NODE_ENV=production\" && webpack --env analyze=true",
-        "build:dev": "webpack"
+        "prepare": "npx tsc -p tsconfig.cjs.json"
     },
     "keywords": [
         "AST",

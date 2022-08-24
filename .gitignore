@@ -9,7 +9,6 @@ packages/runtime/dist
 packages/runtime/lib
 
 packages/transformer/dist
-packages/transformer/lib
 
 *.tgz
 

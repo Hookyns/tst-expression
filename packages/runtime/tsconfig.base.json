@@ -1,10 +1,7 @@
 {
     "compilerOptions": {
-        "sourceMap": true,
+        "sourceMap": false,
         "declaration": true,
-        "module": "es6",
-        "target": "es6",
-        "outDir": "./lib/",
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,

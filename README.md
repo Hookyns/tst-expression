@@ -1,4 +1,4 @@
-# JavaScript(/TypeScript) Expression<> (tst-expression)
+# C# Like Expression<> for TypeScript (tst-expression)
 [![NPM version](https://img.shields.io/npm/v/tst-expression.svg?colorB=brightgreen&label=tst-expression)](https://www.npmjs.com/package/tst-expression) 
 [![NPM version](https://img.shields.io/npm/v/tst-expression-transformer.svg?colorB=brightgreen&label=tst-expression-transformer)](https://www.npmjs.com/package/tst-expression-transformer) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/Hookyns/tst-expression/blob/main/LICENSE)
@@ -27,7 +27,7 @@
     }
 }
 ```
-* if You use Webpack, updater webpack config,
+* if You use Webpack, modify the webpack config,
 ```javascript
 ({
     test: /\.(tsx?)$/,

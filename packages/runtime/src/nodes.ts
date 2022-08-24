@@ -106,7 +106,7 @@ export interface ParenthesizedExpressionNode extends ExpressionNode {
 }
 
 /**
- * Expression node of spread assignment
+ * Expression node of Object literal
  */
 export interface ObjectLiteralExpressionNode extends ExpressionNode {
 	properties: Array<SpreadAssignmentExpressionNode | PropertyAssignmentExpressionNode | ShorthandPropertyAssignmentExpressionNode>;
@@ -134,4 +134,13 @@ export interface PropertyAssignmentExpressionNode extends ExpressionNode {
  */
 export interface ShorthandPropertyAssignmentExpressionNode extends ExpressionNode {
 	name: ExpressionNode;
+}
+
+/**
+ * Expression node of Array literal
+ */
+export interface ArrayLiteralExpressionNode extends ExpressionNode {
+	kind: ExpressionKind.ArrayLiteralExpression
+	elements: ExpressionNode[]
+	multiLine: boolean
 }

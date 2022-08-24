@@ -1,12 +1,9 @@
 import { ExpressionKind }        from "./enums";
 import { ExpressionAssertError } from "./errors";
 import * as nodes                from "./nodes";
-import { ExpressionNode }        from "./nodes";
 import {
-    EXPRESSION_ID_PROPERTY_NAME,
     ExpressionOnly
 }                                from "./types";
-
 
 // noinspection JSUnusedGlobalSymbols
 /**
@@ -30,7 +27,7 @@ export function assertExpression(expression: unknown): asserts expression is Exp
  * Type guard validation that expression is IdentifierExpressionNode
  * @param node
  */
-export function isIdentifier(node: ExpressionNode): node is nodes.IdentifierExpressionNode
+export function isIdentifier(node: nodes.ExpressionNode): node is nodes.IdentifierExpressionNode
 {
     return node?.kind === ExpressionKind.Identifier;
 }
@@ -40,7 +37,7 @@ export function isIdentifier(node: ExpressionNode): node is nodes.IdentifierExpr
  * Type guard validation that expression is IdentifierExpressionNode
  * @param node
  */
-export function assertIdentifier(node: ExpressionNode): asserts node is nodes.IdentifierExpressionNode
+export function assertIdentifier(node: nodes.ExpressionNode): asserts node is nodes.IdentifierExpressionNode
 {
     if (!isIdentifier(node)) throw new ExpressionAssertError(ExpressionKind.Identifier, node);
 }
@@ -50,7 +47,7 @@ export function assertIdentifier(node: ExpressionNode): asserts node is nodes.Id
  * Type guard validation that expression is ArrowFunctionExpressionNode
  * @param node
  */
-export function isArrowFunctionExpression(node: ExpressionNode): node is nodes.ArrowFunctionExpressionNode
+export function isArrowFunctionExpression(node: nodes.ExpressionNode): node is nodes.ArrowFunctionExpressionNode
 {
     return node?.kind === ExpressionKind.ArrowFunction;
 }
@@ -61,7 +58,7 @@ export function isArrowFunctionExpression(node: ExpressionNode): node is nodes.A
  * @param node
  * @throws {ExpressionAssertError}
  */
-export function assertArrowFunctionExpression(node: ExpressionNode): asserts node is nodes.ArrowFunctionExpressionNode
+export function assertArrowFunctionExpression(node: nodes.ExpressionNode): asserts node is nodes.ArrowFunctionExpressionNode
 {
     if (!isArrowFunctionExpression(node)) throw new ExpressionAssertError(ExpressionKind.ArrowFunction, node);
 }
@@ -71,7 +68,7 @@ export function assertArrowFunctionExpression(node: ExpressionNode): asserts nod
  * Type guard validation that expression is ParameterExpressionNode
  * @param node
  */
-export function isParameterExpression(node: ExpressionNode): node is nodes.ParameterExpressionNode
+export function isParameterExpression(node: nodes.ExpressionNode): node is nodes.ParameterExpressionNode
 {
     return node?.kind === ExpressionKind.Parameter;
 }
@@ -81,7 +78,7 @@ export function isParameterExpression(node: ExpressionNode): node is nodes.Param
  * Type guard validation that expression is ParameterExpressionNode
  * @param node
  */
-export function assertParameterExpression(node: ExpressionNode): asserts node is nodes.ParameterExpressionNode
+export function assertParameterExpression(node: nodes.ExpressionNode): asserts node is nodes.ParameterExpressionNode
 {
     if (!isParameterExpression(node)) throw new ExpressionAssertError(ExpressionKind.Parameter, node);
 }
@@ -91,7 +88,7 @@ export function assertParameterExpression(node: ExpressionNode): asserts node is
  * Type guard validation that expression is PropertyAccessExpressionNode
  * @param node
  */
-export function isPropertyAccessExpression(node: ExpressionNode): node is nodes.PropertyAccessExpressionNode
+export function isPropertyAccessExpression(node: nodes.ExpressionNode): node is nodes.PropertyAccessExpressionNode
 {
     return node?.kind === ExpressionKind.PropertyAccessExpression;
 }
@@ -101,7 +98,7 @@ export function isPropertyAccessExpression(node: ExpressionNode): node is nodes.
  * Type guard validation that expression is PropertyAccessExpressionNode
  * @param node
  */
-export function assertPropertyAccessExpression(node: ExpressionNode): asserts node is nodes.PropertyAccessExpressionNode
+export function assertPropertyAccessExpression(node: nodes.ExpressionNode): asserts node is nodes.PropertyAccessExpressionNode
 {
     if (!isPropertyAccessExpression(node)) throw new ExpressionAssertError(ExpressionKind.PropertyAccessExpression, node);
 }
@@ -111,7 +108,7 @@ export function assertPropertyAccessExpression(node: ExpressionNode): asserts no
  * Type guard validation that expression is ElementAccessExpressionNode
  * @param node
  */
-export function isElementAccessExpression(node: ExpressionNode): node is nodes.ElementAccessExpressionNode
+export function isElementAccessExpression(node: nodes.ExpressionNode): node is nodes.ElementAccessExpressionNode
 {
     return node?.kind === ExpressionKind.ElementAccessExpression;
 }
@@ -121,7 +118,7 @@ export function isElementAccessExpression(node: ExpressionNode): node is nodes.E
  * Type guard validation that expression is ElementAccessExpressionNode
  * @param node
  */
-export function assertElementAccessExpression(node: ExpressionNode): asserts node is nodes.ElementAccessExpressionNode
+export function assertElementAccessExpression(node: nodes.ExpressionNode): asserts node is nodes.ElementAccessExpressionNode
 {
     if (!isElementAccessExpression(node)) throw new ExpressionAssertError(ExpressionKind.ElementAccessExpression, node);
 }
@@ -131,7 +128,7 @@ export function assertElementAccessExpression(node: ExpressionNode): asserts nod
  * Type guard validation that expression is NonNullExpressionNode
  * @param node
  */
-export function isNonNullExpression(node: ExpressionNode): node is nodes.NonNullExpressionNode
+export function isNonNullExpression(node: nodes.ExpressionNode): node is nodes.NonNullExpressionNode
 {
     return node?.kind === ExpressionKind.NonNullExpression;
 }
@@ -141,7 +138,7 @@ export function isNonNullExpression(node: ExpressionNode): node is nodes.NonNull
  * Type guard validation that expression is NonNullExpressionNode
  * @param node
  */
-export function assertNonNullExpression(node: ExpressionNode): asserts node is nodes.NonNullExpressionNode
+export function assertNonNullExpression(node: nodes.ExpressionNode): asserts node is nodes.NonNullExpressionNode
 {
     if (!isNonNullExpression(node)) throw new ExpressionAssertError(ExpressionKind.NonNullExpression, node);
 }
@@ -151,7 +148,7 @@ export function assertNonNullExpression(node: ExpressionNode): asserts node is n
  * Type guard validation that expression is BinaryExpressionNode
  * @param node
  */
-export function isBinaryExpression(node: ExpressionNode): node is nodes.BinaryExpressionNode
+export function isBinaryExpression(node: nodes.ExpressionNode): node is nodes.BinaryExpressionNode
 {
     return node?.kind === ExpressionKind.BinaryExpression;
 }
@@ -161,7 +158,7 @@ export function isBinaryExpression(node: ExpressionNode): node is nodes.BinaryEx
  * Type guard validation that expression is BinaryExpressionNode
  * @param node
  */
-export function assertBinaryExpression(node: ExpressionNode): asserts node is nodes.BinaryExpressionNode
+export function assertBinaryExpression(node: nodes.ExpressionNode): asserts node is nodes.BinaryExpressionNode
 {
     if (!isBinaryExpression(node)) throw new ExpressionAssertError(ExpressionKind.BinaryExpression, node);
 }
@@ -171,7 +168,7 @@ export function assertBinaryExpression(node: ExpressionNode): asserts node is no
  * Type guard validation that expression is PrefixUnaryExpressionNode
  * @param node
  */
-export function isPrefixUnaryExpression(node: ExpressionNode): node is nodes.PrefixUnaryExpressionNode
+export function isPrefixUnaryExpression(node: nodes.ExpressionNode): node is nodes.PrefixUnaryExpressionNode
 {
     return node?.kind === ExpressionKind.PrefixUnaryExpression;
 }
@@ -181,7 +178,7 @@ export function isPrefixUnaryExpression(node: ExpressionNode): node is nodes.Pre
  * Type guard validation that expression is PrefixUnaryExpressionNode
  * @param node
  */
-export function assertPrefixUnaryExpression(node: ExpressionNode): asserts node is nodes.PrefixUnaryExpressionNode
+export function assertPrefixUnaryExpression(node: nodes.ExpressionNode): asserts node is nodes.PrefixUnaryExpressionNode
 {
     if (!isPrefixUnaryExpression(node)) throw new ExpressionAssertError(ExpressionKind.PrefixUnaryExpression, node);
 }
@@ -191,7 +188,7 @@ export function assertPrefixUnaryExpression(node: ExpressionNode): asserts node 
  * Type guard validation that expression is CallExpressionNode
  * @param node
  */
-export function isCallExpression(node: ExpressionNode): node is nodes.CallExpressionNode
+export function isCallExpression(node: nodes.ExpressionNode): node is nodes.CallExpressionNode
 {
     return node?.kind === ExpressionKind.CallExpression;
 }
@@ -201,7 +198,7 @@ export function isCallExpression(node: ExpressionNode): node is nodes.CallExpres
  * Type guard validation that expression is CallExpressionNode
  * @param node
  */
-export function assertCallExpression(node: ExpressionNode): asserts node is nodes.CallExpressionNode
+export function assertCallExpression(node: nodes.ExpressionNode): asserts node is nodes.CallExpressionNode
 {
     if (!isCallExpression(node)) throw new ExpressionAssertError(ExpressionKind.CallExpression, node);
 }
@@ -211,7 +208,7 @@ export function assertCallExpression(node: ExpressionNode): asserts node is node
  * Type guard validation that expression is StringLiteralNode
  * @param node
  */
-export function isStringLiteral(node: ExpressionNode): node is nodes.StringLiteralNode
+export function isStringLiteral(node: nodes.ExpressionNode): node is nodes.StringLiteralNode
 {
     return node?.kind === ExpressionKind.StringLiteral;
 }
@@ -221,7 +218,7 @@ export function isStringLiteral(node: ExpressionNode): node is nodes.StringLiter
  * Type guard validation that expression is StringLiteralNode
  * @param node
  */
-export function assertStringLiteral(node: ExpressionNode): asserts node is nodes.StringLiteralNode
+export function assertStringLiteral(node: nodes.ExpressionNode): asserts node is nodes.StringLiteralNode
 {
     if (!isStringLiteral(node)) throw new ExpressionAssertError(ExpressionKind.StringLiteral, node);
 }
@@ -231,7 +228,7 @@ export function assertStringLiteral(node: ExpressionNode): asserts node is nodes
  * Type guard validation that expression is NumericLiteralNode
  * @param node
  */
-export function isNumericLiteral(node: ExpressionNode): node is nodes.NumericLiteralNode
+export function isNumericLiteral(node: nodes.ExpressionNode): node is nodes.NumericLiteralNode
 {
     return node?.kind === ExpressionKind.NumericLiteral;
 }
@@ -241,7 +238,7 @@ export function isNumericLiteral(node: ExpressionNode): node is nodes.NumericLit
  * Type guard validation that expression is NumericLiteralNode
  * @param node
  */
-export function assertNumericLiteral(node: ExpressionNode): asserts node is nodes.NumericLiteralNode
+export function assertNumericLiteral(node: nodes.ExpressionNode): asserts node is nodes.NumericLiteralNode
 {
     if (!isNumericLiteral(node)) throw new ExpressionAssertError(ExpressionKind.NumericLiteral, node);
 }
@@ -251,7 +248,7 @@ export function assertNumericLiteral(node: ExpressionNode): asserts node is node
  * Type guard validation that expression is ParenthesizedExpressionNode
  * @param node
  */
-export function isParenthesizedExpression(node: ExpressionNode): node is nodes.ParenthesizedExpressionNode
+export function isParenthesizedExpression(node: nodes.ExpressionNode): node is nodes.ParenthesizedExpressionNode
 {
     return node?.kind === ExpressionKind.ParenthesizedExpression;
 }
@@ -261,7 +258,7 @@ export function isParenthesizedExpression(node: ExpressionNode): node is nodes.P
  * Type guard validation that expression is ParenthesizedExpressionNode
  * @param node
  */
-export function assertParenthesizedExpression(node: ExpressionNode): asserts node is nodes.ParenthesizedExpressionNode
+export function assertParenthesizedExpression(node: nodes.ExpressionNode): asserts node is nodes.ParenthesizedExpressionNode
 {
     if (!isParenthesizedExpression(node)) throw new ExpressionAssertError(ExpressionKind.ParenthesizedExpression, node);
 }
@@ -271,7 +268,7 @@ export function assertParenthesizedExpression(node: ExpressionNode): asserts nod
  * Type guard validation that expression is ObjectLiteralExpressionNode
  * @param node
  */
-export function isObjectLiteralExpression(node: ExpressionNode): node is nodes.ObjectLiteralExpressionNode
+export function isObjectLiteralExpression(node: nodes.ExpressionNode): node is nodes.ObjectLiteralExpressionNode
 {
     return node?.kind === ExpressionKind.ObjectLiteralExpression;
 }
@@ -281,9 +278,28 @@ export function isObjectLiteralExpression(node: ExpressionNode): node is nodes.O
  * Type guard validation that expression is ObjectLiteralExpressionNode
  * @param node
  */
-export function assertObjectLiteralExpression(node: ExpressionNode): asserts node is nodes.ObjectLiteralExpressionNode
+export function assertObjectLiteralExpression(node: nodes.ExpressionNode): asserts node is nodes.ObjectLiteralExpressionNode
 {
     if (!isObjectLiteralExpression(node)) throw new ExpressionAssertError(ExpressionKind.ObjectLiteralExpression, node);
+}
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Type guard validation that expression is ArrayLiteralExpression.
+ * @param {ExpressionNode} node
+ */
+export function isArrayLiteralExpression(node: nodes.ExpressionNode): node is nodes.ArrayLiteralExpressionNode {
+	return node?.kind === ExpressionKind.ArrayLiteralExpression
+}
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Type guard validation that expression is ArrayLiteralExpression
+ * @param node
+ */
+export function assertArrayLiteralExpression(node: nodes.ExpressionNode): asserts node is nodes.ArrayLiteralExpressionNode
+{
+	if (!isArrayLiteralExpression(node)) throw new ExpressionAssertError(ExpressionKind.ArrayLiteralExpression, node);
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -291,7 +307,7 @@ export function assertObjectLiteralExpression(node: ExpressionNode): asserts nod
  * Type guard validation that expression is PropertyAssignmentExpressionNode
  * @param node
  */
-export function isPropertyAssignmentExpression(node: ExpressionNode): node is nodes.PropertyAssignmentExpressionNode
+export function isPropertyAssignmentExpression(node: nodes.ExpressionNode): node is nodes.PropertyAssignmentExpressionNode
 {
     return node?.kind === ExpressionKind.PropertyAssignment;
 }
@@ -301,7 +317,7 @@ export function isPropertyAssignmentExpression(node: ExpressionNode): node is no
  * Type guard validation that expression is PropertyAssignmentExpressionNode
  * @param node
  */
-export function assertPropertyAssignmentExpression(node: ExpressionNode): asserts node is nodes.PropertyAssignmentExpressionNode
+export function assertPropertyAssignmentExpression(node: nodes.ExpressionNode): asserts node is nodes.PropertyAssignmentExpressionNode
 {
     if (!isPropertyAssignmentExpression(node)) throw new ExpressionAssertError(ExpressionKind.PropertyAssignment, node);
 }
@@ -311,7 +327,7 @@ export function assertPropertyAssignmentExpression(node: ExpressionNode): assert
  * Type guard validation that expression is ShorthandPropertyAssignmentExpressionNode
  * @param node
  */
-export function isShorthandPropertyAssignmentExpression(node: ExpressionNode): node is nodes.ShorthandPropertyAssignmentExpressionNode
+export function isShorthandPropertyAssignmentExpression(node: nodes.ExpressionNode): node is nodes.ShorthandPropertyAssignmentExpressionNode
 {
     return node?.kind === ExpressionKind.ShorthandPropertyAssignment;
 }
@@ -321,7 +337,7 @@ export function isShorthandPropertyAssignmentExpression(node: ExpressionNode): n
  * Type guard validation that expression is ShorthandPropertyAssignmentExpressionNode
  * @param node
  */
-export function assertShorthandPropertyAssignmentExpression(node: ExpressionNode): asserts node is nodes.ShorthandPropertyAssignmentExpressionNode
+export function assertShorthandPropertyAssignmentExpression(node: nodes.ExpressionNode): asserts node is nodes.ShorthandPropertyAssignmentExpressionNode
 {
     if (!isShorthandPropertyAssignmentExpression(node)) throw new ExpressionAssertError(ExpressionKind.ShorthandPropertyAssignment, node);
 }
@@ -331,7 +347,7 @@ export function assertShorthandPropertyAssignmentExpression(node: ExpressionNode
  * Type guard validation that expression is SpreadAssignmentExpressionNode
  * @param node
  */
-export function isSpreadAssignmentExpression(node: ExpressionNode): node is nodes.SpreadAssignmentExpressionNode
+export function isSpreadAssignmentExpression(node: nodes.ExpressionNode): node is nodes.SpreadAssignmentExpressionNode
 {
     return node?.kind === ExpressionKind.SpreadAssignment;
 }
@@ -341,8 +357,7 @@ export function isSpreadAssignmentExpression(node: ExpressionNode): node is node
  * Type guard validation that expression is SpreadAssignmentExpressionNode
  * @param node
  */
-export function assertSpreadAssignmentExpression(node: ExpressionNode): asserts node is nodes.SpreadAssignmentExpressionNode
+export function assertSpreadAssignmentExpression(node: nodes.ExpressionNode): asserts node is nodes.SpreadAssignmentExpressionNode
 {
     if (!isSpreadAssignmentExpression(node)) throw new ExpressionAssertError(ExpressionKind.SpreadAssignment, node);
 }
-
